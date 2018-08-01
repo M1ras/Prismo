@@ -67,6 +67,16 @@ getBootEntries() {
   let "BOOT_ENTRIES_LAST_INDEX=LAST_INDEX - NON_LINUX_INDICES"
 }
 
+printBootEntries() {
+  /usr/bin/printf ' %s \t %s \n' "INDEX" "KERNEL"
+
+  local CURRENT_INDEX=0
+  while [[ "$CURRENT_INDEX" -le "$BOOT_ENTRIES_LAST_INDEX" ]]; do
+    /usr/bin/printf ' %s \t %s \n' "$CURRENT_INDEX" "${BOOT_ENTRIES[$CURRENT_INDEX,TITLE]}"
+    let "CURRENT_INDEX=$CURRENT_INDEX + 1"
+  done
+}
+
 while getopts "$OPTIONS" OPTION; do
   case "$OPTION" in
     "$OPTION_HELP")
@@ -78,6 +88,7 @@ while getopts "$OPTIONS" OPTION; do
     "$OPTION_LOAD_KERNEL")
       exitIfNotRoot
       getBootEntries
+      printBootEntries
       ;;
   esac
 done
