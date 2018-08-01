@@ -23,6 +23,13 @@ version() {
   exit
 }
 
+exitIfNotRoot() {
+  if [[ `id -u` != '0' ]]; then
+    /usr/bin/printf '%s needs to be run as root. Exiting...\n' "$NAME"
+    exit 13
+  fi
+}
+
 while getopts "$OPTIONS" OPTION; do
   case "$OPTION" in
     "$OPTION_HELP")
