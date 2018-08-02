@@ -13,6 +13,7 @@ DESCRIPTION_VERSION='Version Description'
 
 declare -A BOOT_ENTRIES
 BOOT_ENTRIES_LAST_INDEX=-1
+SELECTED_BOOT_ENTRY_INDEX=-1
 
 help() {
   /usr/bin/printf ' -%s\t%s\n' \
@@ -77,6 +78,13 @@ printBootEntries() {
   done
 }
 
+selectBootEntry() {
+  while [[ ( ! "$SELECTED_BOOT_ENTRY_INDEX" =~ ^[0-9]+$ ) || ( "$SELECTED_BOOT_ENTRY_INDEX" -lt '0' ) || ( "$SELECTED_BOOT_ENTRY_INDEX" -gt "$BOOT_ENTRIES_LAST_INDEX" ) ]]; do
+    /usr/bin/printf 'Please select a boot entry (0 - %s): ' "$BOOT_ENTRIES_LAST_INDEX"
+    read SELECTED_BOOT_ENTRY_INDEX
+  done
+}
+
 while getopts "$OPTIONS" OPTION; do
   case "$OPTION" in
     "$OPTION_HELP")
@@ -89,6 +97,7 @@ while getopts "$OPTIONS" OPTION; do
       exitIfNotRoot
       getBootEntries
       printBootEntries
+      selectBootEntry
       ;;
   esac
 done
