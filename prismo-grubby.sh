@@ -85,6 +85,15 @@ selectBootEntry() {
   done
 }
 
+loadKernel() {
+  local KERNEL="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,KERNEL]}"
+  local INITRD="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,INITRD]}"
+  local ARGS="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,ARGS]}"
+  local ROOT="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,ROOT]}"
+
+  kexec -l "$KERNEL" --initrd="$INITRD" --append="root=$ROOT $ARGS"
+}
+
 while getopts "$OPTIONS" OPTION; do
   case "$OPTION" in
     "$OPTION_HELP")
@@ -98,6 +107,7 @@ while getopts "$OPTIONS" OPTION; do
       getBootEntries
       printBootEntries
       selectBootEntry
+      loadKernel
       ;;
   esac
 done
