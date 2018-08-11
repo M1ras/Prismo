@@ -96,6 +96,8 @@ loadKernel() {
   kexec -l "$KERNEL" --initrd="$INITRD" --append="root=$ROOT $ARGS"
 }
 
+[[ -z "$1" ]] && help
+
 while getopts "$OPTIONS" OPTION; do
   case "$OPTION" in
     "$OPTION_HELP")
@@ -110,6 +112,9 @@ while getopts "$OPTIONS" OPTION; do
       printBootEntries
       selectBootEntry
       loadKernel
+      ;;
+    *)
+      help
       ;;
   esac
 done
