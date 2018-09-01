@@ -17,6 +17,12 @@ BOOT_ENTRIES_LAST_INDEX=-1
 SELECTED_BOOT_ENTRY_INDEX=-1
 
 help() {
+  # local PRISMO_LOCATION='Time Room'
+  local PRISMO_LOCATION=`basename "$0"`
+
+  /usr/bin/printf '%s %s\n' "$NAME" "$VERSION"
+  /usr/bin/printf 'Usage: %s [OPTION]\n\n' "$PRISMO_LOCATION"
+
   /usr/bin/printf ' -%s\t%s\n' \
     "$OPTION_HELP" "$DESCRIPTION_HELP" \
     "$OPTION_VERSION" "$DESCRIPTION_VERSION" \
