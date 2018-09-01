@@ -87,6 +87,11 @@ selectBootEntry() {
   done
 }
 
+unloadPreviousKernel() {
+  kexec -u
+  /usr/bin/printf 'Unloaded any previously loaded kernel.\n'
+}
+
 loadKernel() {
   local KERNEL="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,KERNEL]}"
   local INITRD="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,INITRD]}"
@@ -111,6 +116,7 @@ while getopts "$OPTIONS" OPTION; do
       getBootEntries
       printBootEntries
       selectBootEntry
+      unloadPreviousKernel
       loadKernel
       ;;
     *)
