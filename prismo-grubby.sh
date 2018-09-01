@@ -97,8 +97,10 @@ loadKernel() {
   local INITRD="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,INITRD]}"
   local ARGS="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,ARGS]}"
   local ROOT="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,ROOT]}"
+  local TITLE="${BOOT_ENTRIES[$SELECTED_BOOT_ENTRY_INDEX,TITLE]}"
 
   kexec -l "$KERNEL" --initrd="$INITRD" --append="root=$ROOT $ARGS"
+  /usr/bin/printf 'Loaded %s.\n' "$TITLE"
 }
 
 [[ -z "$1" ]] && help
