@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 NAME='Prismo'
-VERSION='0.0.0'
+VERSION='1.0.0'
 
 OPTION_HELP='h'
 OPTION_VERSION='v'
